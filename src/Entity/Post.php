@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use symfony\Component\Validator\Constraints as Assert;
+
 class Post {
+    
     private int $id;
     private ?string $title = NULL;
     private string $content;

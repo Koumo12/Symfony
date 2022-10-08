@@ -6,34 +6,37 @@ namespace App\Entity;
 use symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity()]
-#[ORM\Table(name:"post")]
+/**
+ * @ORM\Entity()
+ */
 
 class Post {
-    #[ORM\Id()]
-    #[ORM\GeneratedValue(strategy: "AUTO")]
-    #[ORM\Column(type: "integer")]
+   /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
     private int $id;
 
     /**
-     * @ORM\Column(type:"string", nullable:true, length:150)
+     * @ORM\Column(type="string", length=150, nullable=true)
      */
     private ?string $title = NULL;
 
     /**
-     * @ORM\Column(type:"text", length:320)
+     * @ORM\Column(type="text", length=320)
      */
     private string $content;
 
     /**
-     * @ORM\Column(type:"text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private ?string $image = NULL;
     
-    ///**
-    // * @ORM\Column(type:"User")
-    // */
-    //private $user;
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
+     */
+    private $user;
 
     public function getId()
     {

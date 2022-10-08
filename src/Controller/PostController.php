@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,8 +15,11 @@ class PostController extends AbstractController
     /**
      * @Route("/")
      */
-    public function index(): Response
+    public function index(ManagerRegistry $doctrine,): Response
     {
+        $repository = $doctrine->getRepository(Post::class);
+        $posts = $repository->findAll(); // SELECT * FROM
+        dump($posts);
         return $this->render('post/demo.html.twig', [
             'age' => 30
         ]);
@@ -24,7 +28,7 @@ class PostController extends AbstractController
     /**
      * @Route("/post/new")
      */
-    public function create(Request $request): Response
+    public function create(Request $request, ManagerRegistry $doctrine): Response
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
@@ -33,7 +37,9 @@ class PostController extends AbstractController
         
         if($form->isSubmitted() && $form->isValid())
         {
-            dump($post);
+            $em = $doctrine->getManager;
+            $em->persist($post);
+            $em->flush();
         }
 
         return $this->render('post/form.html.twig', [

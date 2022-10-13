@@ -1,10 +1,10 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    {{form_start(post_form, {"attr": {"novalidate": "novalidate"}})}}
+    {{form_start(post_form)}}
         {{form_rest(post_form)}}
         <input class="btn btn-primary" type="submit" value="Publier">
-    {{form_end(post_form)}}
+    
 {% endblock %}
 
 

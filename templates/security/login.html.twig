@@ -11,14 +11,16 @@
     {{form_rest(form)}}
     <button type="submit" class="btn btn-primary mt-3">Connexion</button> #} 
     <form method="post" class="container">
-        <label for="username"> Nom d´utilisateur</label>
+        <label for="username" class="form-label"> Nom d´utilisateur</label>
         <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" required />
 
-        <label for="password">Mot de passe</label>
+        <label for="password" class="form-label">Mot de passe</label>
         <input type="text" id="password" name="_password" class="form-control" required />
     
         <input type="hidden" name="_target_path" value="/">
+        <input type="hidden" name="">
         <button type="submit" class="btn btn-primary mt-3">Connexion</button>  
         
     </form> 
+    <a href="/user/new" class="btn btn-link">Vous n'avez pas encore de compte ?</a>
 {% endblock %}

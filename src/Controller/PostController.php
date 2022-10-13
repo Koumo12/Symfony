@@ -15,7 +15,7 @@ class PostController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(ManagerRegistry $doctrine,): Response
+    public function index(ManagerRegistry $doctrine): Response
     {
         $repository = $doctrine->getRepository(Post::class);
         $posts = $repository->findAll(); // SELECT * FROM
@@ -37,6 +37,7 @@ class PostController extends AbstractController
         
         if($form->isSubmitted() && $form->isValid())
         {
+            $post->setUser($this->getUser());
             $em = $doctrine->getManager();
             $em->persist($post);
             $em->flush();

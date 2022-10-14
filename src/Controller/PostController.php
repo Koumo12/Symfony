@@ -17,12 +17,14 @@ class PostController extends AbstractController
      */
     public function index(ManagerRegistry $doctrine): Response
     {
+        
         $repository = $doctrine->getRepository(Post::class);
         $posts = $repository->findAll(); // SELECT * FROM
         dump($posts);
         return $this->render('post/demo.html.twig', [
             'posts' => $posts
         ]);
+        
     }
 
     /**
@@ -30,14 +32,15 @@ class PostController extends AbstractController
      */
     public function create(Request $request, ManagerRegistry $doctrine): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
-       
+    
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid())
         {
-            $post->setUser($this->getUser());
+            $post->setUser($this->getUser()); // permet de récupérer l´utilisateur connecter
             $em = $doctrine->getManager();
             $em->persist($post);
             $em->flush();
@@ -46,6 +49,7 @@ class PostController extends AbstractController
         return $this->render('post/form.html.twig', [
             'post_form' => $form->createView()
         ]);
+        
     }
 
       /**
@@ -53,6 +57,7 @@ class PostController extends AbstractController
      */
     public function update(Request $request, Post $post, ManagerRegistry $doctrine): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'); // seul le user peut faire une publication
         $form = $this->createForm(PostType::class, $post);       
         $form->handleRequest($request);
         
@@ -73,6 +78,7 @@ class PostController extends AbstractController
      */
     public function delete(Post $post, ManagerRegistry $doctrine): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $em = $doctrine->getManager();
         $em->remove($post);
         $em->flush();    

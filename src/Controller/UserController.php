@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +22,8 @@ class UserController extends AbstractController
         $user = new User($userPasswordHasher);
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
             $em = $doctrine->getManager();
             $em->persist($user);
             $em->flush();

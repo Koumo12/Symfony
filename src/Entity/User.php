@@ -8,9 +8,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity("username", message="Le nom d´utilisateur est déja pris !")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -22,9 +24,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column( length=180, unique=true)
      */
-    private $username;
+    private  ?string $username = null;
 
     /**
      * @ORM\Column(type="json")
@@ -58,9 +60,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @deprecated since Symfony 5.3, use getUserIdentifier instead
      */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
-        return (string) $this->username;
+        return  $this->username;
     }
 
     public function setUsername(string $username): self

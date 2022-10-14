@@ -15,8 +15,14 @@
         <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" required />
 
         <label for="password" class="form-label">Mot de passe</label>
-        <input type="text" id="password" name="_password" class="form-control" required />
-    
+        <div class="input-group ">
+            <input type="password" id="user_password" name="_password" class="form-control" required />
+            <span role="button" class="input-group-text" onclick="togglePassword()">
+                <i class="bi bi-eye " id="eye"></i>
+                <i class="bi bi-eye-slash" id="eye-slash"></i>
+            </span>
+                
+        </div>
         <input type="hidden" name="_target_path" value="/">
         <input type="hidden" name="">
         <button type="submit" class="btn btn-primary mt-3">Connexion</button>  

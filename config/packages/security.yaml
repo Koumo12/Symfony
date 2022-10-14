@@ -20,7 +20,7 @@ security:
                 login_path: login
                 check_path: login
             logout:
-                path: app_logout
+                path: logout
             provider: app_user_provider
 
             # activate different ways to authenticate

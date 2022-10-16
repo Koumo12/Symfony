@@ -17,7 +17,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $chris = new User($this->passwordHasher);
-        $chris->setUsername("N0tchris")->setPassword("123");
+        $chris->setUsername("N0tchris")->setPassword("123")->setRoles(["ROLE_USER","ROLE_ADMIN"]);
         // $product = new Product();
         $manager->persist($chris);        
          

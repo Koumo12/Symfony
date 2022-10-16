@@ -2,6 +2,12 @@
 
 
 {% block body %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <div class="d-flex justify-content-around flex-wrap container mt-5">
 
         {% for post in posts %}
@@ -15,15 +21,23 @@
                     {% endif %}
                     <p class="card-text">{{post.content}}</p>
                     
-                    {% if app.user %}
+                    {% if app.user and app.user is same as post.user %} 
                         <a href="{{path('delete-post', {'id': post.id})}}" class="btn btn-danger"> Supprimer</a>
                         <a href="{{path('edit-post', {'id': post.id})}}" class="btn btn-warning"> Modifier</a>
                         <a href="{{path('copy-post', {'id': post.id})}}" class="btn btn-info"> Copie</a>
                     {% endif %}
 
                 </div>
+                {# {{dump(post.publishedAt)}} #}
                 <div class="card-footer">
-					<small class="text-muted">{{post.user.username}}</small>
+					<small class="text-muted">
+                        Publier par 
+                        {{post.user.username}}
+                         le 
+                        {{post.publishedAt | date("d/m/Y")}} 
+                        á
+                        {{post.publishedAt | date("H:i")}}                        
+                    </small>
 				</div>
             </div>
         {% endfor %}

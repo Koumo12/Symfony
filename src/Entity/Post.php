@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 
-use symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,6 +31,12 @@ class Post {
      * @ORM\Column(type="text", nullable=true)
      */
     private ?string $image = NULL;
+
+     /**
+     * @ORM\Column(type="datetime")
+     */
+    private \DateTime $publishedAt;
+    
     
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
@@ -94,6 +99,18 @@ class Post {
     public function setUser($user)
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getPublishedAt()
+    {
+        return $this->publishedAt;
+    }
+  
+    public function setPublishedAt( $publishedAt)
+    {
+        $this->publishedAt = $publishedAt;
 
         return $this;
     }
